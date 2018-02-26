@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FILE=$1
+
+while true; do
+  inotifywait -q --format "" --event delete_self $FILE
+  if runhaskell $FILE > tmp-file
+  then
+    echo New version
+    mv tmp-file pic.svg
+    inkscape -e pic.png pic.svg
+  fi
+done
+
